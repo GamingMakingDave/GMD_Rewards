@@ -14,13 +14,12 @@ ESX.RegisterServerCallback('GMD_Rewards:itsPlayerNew', function(src, cb, data)
         else
             debugprint("new player")
 
-            -- MySQL.Async.execute('UPDATE users SET rewards_itsNew = @newValue WHERE identifier = @identifier', {
-            --     ['@newValue'] = 1,
-            --     ['@identifier'] = xPlayer.identifier
-            -- }, function(rowsChanged)
-            --     cb(true)
-            -- end)
-
+            MySQL.Async.execute('UPDATE users SET rewards_itsNew = @newValue WHERE identifier = @identifier', {
+                ['@newValue'] = 1,
+                ['@identifier'] = xPlayer.identifier
+            }, function(rowsChanged)
+                cb(true)
+            end)
             cb(true)
         end
     end)
