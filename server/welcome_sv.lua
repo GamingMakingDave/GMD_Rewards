@@ -20,7 +20,6 @@ ESX.RegisterServerCallback('GMD_Rewards:itsPlayerNew', function(src, cb, data)
             }, function(rowsChanged)
                 cb(true)
             end)
-            cb(true)
         end
     end)
 end)
