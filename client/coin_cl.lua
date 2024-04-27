@@ -56,3 +56,16 @@ CreateThread(function()
         end
     end
 end)
+
+RegisterNetEvent('GMD_Rewards:ShowCoins')
+AddEventHandler('GMD_Rewards:ShowCoins', function(coins)
+    if coins > 0 then
+        ESX.ShowNotification(ConfigLocal.CoinLocals['hasCoins'], 3500)
+    else
+        ESX.ShowNotification(ConfigLocal.CoinLocals['has0Coins'], 3500)
+    end
+end)
+
+RegisterCommand('getmycoins', function()
+    TriggerServerEvent('GMD_Rewards:ShowCoins')
+end, false)
