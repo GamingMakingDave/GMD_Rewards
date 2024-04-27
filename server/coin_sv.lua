@@ -2,24 +2,28 @@ ESX = exports['es_extended']:getSharedObject()
 
 local playerTimeTable = {}
 
-function GetCoins()
-    local src = source
-    local identifiers = GetPlayerIdentifiers(src)
+RegisterServerEvent('GMD_Rewards:ShowCoins')
+AddEventHandler('GMD_Rewards:ShowCoins', function()
+    local playerSource = source
+    local playerCoins = GetCoins(playerSource)
+    TriggerClientEvent('GMD_Rewards:ShowCoins', playerSource, playerCoins)
+end)
 
-    for _, identifier in ipairs(identifiers) do
-        local result = MySQL.query.await('SELECT coin FROM users WHERE identifier = @identifier', {['@identifier'] = identifier})
+function GetCoins(source)
+    local source = source
+    local xPlayer = ESX.GetPlayerFromId(source)
 
-        if not result or #result == 0 then
-            return 0
-        end
+    debugprint('DB get Coins')
 
-        local playerCoins = result[1].coin
-        debugprint(playerCoins)
-        return playerCoins
+    local result = MySQL.Sync.fetchScalar('SELECT rewards_coins FROM users WHERE identifier = @identifier', {['@identifier'] = xPlayer.identifier})
+
+    if result ~= 0 then
+
+        debugprint(ESX.DumpTable(result))
+
+        return result
     end
 end
-
-exports['GMD_Rewards']:GetCoins()
 
 RegisterServerEvent('GMD_Rewards:updateTimeServer')
 AddEventHandler('GMD_Rewards:updateTimeServer', function(rewards_currenttime)
@@ -28,11 +32,13 @@ AddEventHandler('GMD_Rewards:updateTimeServer', function(rewards_currenttime)
     local playerName = GetPlayerName(source)
     local found = false
 
-    debugprint("Lizenz für Spieler " .. playerName .. ": " .. xPlayer.getIdentifier())
+    debugprint('License for player ' .. playerName .. ': ' .. xPlayer.getIdentifier())
 
     for _, entry in ipairs(playerTimeTable) do
         if entry.identifier == xPlayer.getIdentifier() then
-            debugprint("Zeit aktualisiert")
+            
+            debugprint('Time updated')
+
             entry.time = rewards_currenttime
             found = true
             break
@@ -40,7 +46,9 @@ AddEventHandler('GMD_Rewards:updateTimeServer', function(rewards_currenttime)
     end
 
     if not found then
-        debugprint("Neuer Spieler")
+        
+        debugprint('New player')
+
         table.insert(playerTimeTable, {identifier = xPlayer.getIdentifier(), time = rewards_currenttime})
     end
 end)
@@ -79,7 +87,7 @@ AddEventHandler('playerDropped', function (reason)
         end
     end
 
-    debugprint("DB safe")
+    debugprint('DB safe')
     debugprint(rewards_currenttime)
 
     MySQL.Async.execute('UPDATE users SET rewards_currenttime = @rewards_currenttime WHERE identifier = @identifier',
@@ -108,3 +116,5 @@ ESX.RegisterServerCallback('GMD_Rewards:getOldTime', function(source, cb)
         cb(result)
     end)
 end)
+
+exports('GMD_Rewards', GetCoins)
