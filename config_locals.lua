@@ -32,6 +32,8 @@ ConfigLocal.WelcomeLocals = {
 
 ConfigLocal.CoinLocals = {
     ['hasBecomeCoin'] = 'Danke für deine Spielzeit dir wurden %s Münzen zu deinem konto hinzugefügt. Dein neuer Kontostand beträgt nun %s Münzen.',
+    ['hasCoins'] = 'Du hast insgesammt %s Coins.',
+    ['has0Coins'] = 'Du hast noch keine Coins.',
 }
 
 ConfigLocal.ShopLocals = {
