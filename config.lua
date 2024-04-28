@@ -5,6 +5,7 @@ Config.DebugMode = false
 -- Welcome gift settings
 Config.UseCommand = true
 Config.CommanName = 'welcomegift'
+Config.GetCoinCommanName = 'getmycoins'
 
 Config.ServerName = 'GMD_Scripts'
 
@@ -42,8 +43,8 @@ Config.RangeLoadToShop = 10.0
 
 Config.ShowVehicle = true
 Config.ShowItem = true
-Config.ShowMoney = false
 Config.ShowMoney = true
+Config.ShowWeapon = true
 
 Config.UseShopMarker = true
 Config.ShopMarkerType = 1
