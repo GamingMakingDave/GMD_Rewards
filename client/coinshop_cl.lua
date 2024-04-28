@@ -203,7 +203,7 @@ function ShowVehicleList()
             onSelect = function()
                 TriggerServerEvent('GMD_Rewards:GiveVehicle', vehicleName, vehicleDisplayName, vehicleCost)
             end,
-            metadata = {Coast = costAsString}
+            metadata = {Cost = costAsString}
         }
 
         table.insert(List, TmpTable)
@@ -239,7 +239,7 @@ function ShowItemList()
             onSelect = function()
                 TriggerServerEvent('GMD_Rewards:GiveItem', itemName, itemDisplayName, itemCost)
             end,
-            metadata = {Coast = costAsString}
+            metadata = {Cost = costAsString}
         }
 
         table.insert(List, TmpTable)
@@ -276,7 +276,7 @@ function ShowMoneyList()
             onSelect = function()
                 TriggerServerEvent('GMD_Rewards:GiveMoney', moneyAccount, moneyValue, moneyCost)
             end,
-            metadata = {Coast = costAsString}
+            metadata = {Cost = costAsString}
         }
 
         table.insert(List, TmpTable)
@@ -312,7 +312,7 @@ function ShowWeaponList()
             onSelect = function()
                 TriggerServerEvent('GMD_Rewards:GiveWeapon', weaponName, weaponDisplayName, weaponCost)
             end,
-            metadata = {Coast = costAsString}
+            metadata = {Cost = costAsString}
         }
 
         table.insert(List, TmpTable)
