@@ -87,7 +87,7 @@ AddEventHandler('GMD_Rewards:GiveVehicle',function(vehicleName, vehicleDisplayNa
         if playerCoins >= vehicleCost then
             local plate = GeneratePlate()
             local model = GetHashKey(Config.VehicleName)
-        
+
             MySQL.insert('INSERT INTO owned_vehicles (owner, plate, stored, parking, vehicle) VALUES (?, ?, ?, ?, ?)',
             {
                 xPlayer.identifier,
@@ -95,12 +95,14 @@ AddEventHandler('GMD_Rewards:GiveVehicle',function(vehicleName, vehicleDisplayNa
                 1,
                 Config.ParkingGarageName,
                 json.encode({model = model, plate = plate})
-        
+
             }, function(rowsChanged)
                 if rowsChanged then
                     debugprint("IN GARAGE")
                 end
             end)
+
+            RemovePlayerCoins(source, vehicleCost)
             TriggerClientEvent('esx:showNotification', source, ConfigLocal.ShopLocals['buyVehicleNotify']:format(vehicleDisplayName, vehicleCost, Config.ParkingGarageName))
         else
             TriggerClientEvent('esx:showNotification', source, ConfigLocal.ShopLocals['notEnoughCoins'])
