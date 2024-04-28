@@ -25,7 +25,7 @@ AddEventHandler('GMD_Rewards:GiveItem', function(itemName, itemDisplayName, item
 end)
 
 RegisterNetEvent('GMD_Rewards:GiveMoney')
-AddEventHandler('GMD_Rewards:GiveMoney', function(account, amount, moneyCoast)
+AddEventHandler('GMD_Rewards:GiveMoney', function(account, amount, moneyCost)
     local source = source
     local xPlayer = ESX.GetPlayerFromId(source)
     local result = MySQL.Sync.fetchScalar('SELECT rewards_coins FROM users WHERE identifier = @identifier', {
@@ -35,11 +35,11 @@ AddEventHandler('GMD_Rewards:GiveMoney', function(account, amount, moneyCoast)
     if result then
         local playerCoins = tonumber(result)
 
-        if playerCoins >= moneyCoast then
+        if playerCoins >= moneyCost then
             xPlayer.addAccountMoney(account, amount)
-            RemovePlayerCoins(source, moneyCoast)
+            RemovePlayerCoins(source, moneyCost)
 
-            TriggerClientEvent('esx:showNotification', source, ConfigLocal.ShopLocals['buyNotify']:format(amount, moneyCoast))
+            TriggerClientEvent('esx:showNotification', source, ConfigLocal.ShopLocals['buyNotify']:format(amount, moneyCost))
         else
             TriggerClientEvent('esx:showNotification', source, ConfigLocal.ShopLocals['notEnoughCoins'])
         end
