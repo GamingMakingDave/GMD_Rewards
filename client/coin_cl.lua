@@ -60,7 +60,7 @@ end)
 RegisterNetEvent('GMD_Rewards:ShowCoins')
 AddEventHandler('GMD_Rewards:ShowCoins', function(coins)
     if coins > 0 then
-        ESX.ShowNotification(ConfigLocal.CoinLocals['hasCoins'], 3500)
+        ESX.ShowNotification(ConfigLocal.CoinLocals['hasCoins']:format(coins), 3500)
     else
         ESX.ShowNotification(ConfigLocal.CoinLocals['has0Coins'], 3500)
     end
